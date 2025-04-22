@@ -51,7 +51,7 @@ export default function Myads() {
           return;
         }
 
-        const response = await axios.get("http://localhost:5000/myads_view", {
+        const response = await axios.get("https://chages-new-olx.onrender.com/myads_view", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -71,7 +71,7 @@ export default function Myads() {
     try {
       setDeletingCardId(id);
       const token = localStorage.getItem("authToken");
-      await axios.delete(`http://localhost:5000/myads_delete/${id}`, {
+      await axios.delete(`https://chages-new-olx.onrender.com/myads_delete/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -112,7 +112,7 @@ export default function Myads() {
             try {
               // Update promotion status in the database
               const updateResponse = await axios.post(
-                "http://localhost:5000/update-promotion-status",
+                "https://chages-new-olx.onrender.com/update-promotion-status",
                 { productId: selectedProduct._id },
                 {
                   headers: {
@@ -223,7 +223,7 @@ export default function Myads() {
       // Server-side integration (requires both key ID and secret)
       // Create Razorpay order
       const orderResponse = await axios.post(
-        "http://localhost:5000/create-promotion-order",
+        "https://chages-new-olx.onrender.com/create-promotion-order",
         { productId: selectedProduct._id },
         {
           headers: {
@@ -250,7 +250,7 @@ export default function Myads() {
             
             // Verify payment with server
             const verifyResponse = await axios.post(
-              "http://localhost:5000/verify-promotion-payment",
+              "https://chages-new-olx.onrender.com/verify-promotion-payment",
               {
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_order_id: response.razorpay_order_id,
