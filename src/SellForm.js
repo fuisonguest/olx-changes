@@ -419,7 +419,7 @@ export default function SellForm() {
                   </p>
                   <p onClick={handleClick}>
                     <u>
-                      <b>Change</b>
+                      <b>Back</b>
                     </u>
                   </p>
                 </div>
