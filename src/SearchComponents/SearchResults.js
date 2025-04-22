@@ -22,7 +22,7 @@ export default function SearchResults() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/search?q=${query}`);
+        const response = await axios.get(`https://chages-new-olx.onrender.com/search?q=${query}`);
         
         // Sort products to prioritize promoted products
         const sortedResults = [...response.data].sort((a, b) => {
