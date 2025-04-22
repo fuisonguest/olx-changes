@@ -1,0 +1,424 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Divider,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  useToast,
+  Button,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Badge,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Box,
+} from "@chakra-ui/react";
+import { Carousel } from "react-bootstrap";
+import CurrencyRupeeTwoToneIcon from "@mui/icons-material/CurrencyRupeeTwoTone";
+import { MDBCardImage, MDBCol, MDBRow } from "mdb-react-ui-kit";
+import MapComponent from "./MapComponent";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import Modallogin from "./Modallogin";
+import Loading from "./resources/Loading";
+import NotFoundComponent from "./resources/NotFound";
+
+const PreviewAd = ({auth}) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [data, setData] = useState({});
+  const [own, setOwn] = useState();
+  const [loading, setLoading] = useState(true);
+  const [NotFound, setNotFound] = useState(false);
+  const [isRemoving, setIsRemoving] = useState(false);
+  const authToken = localStorage.getItem("authToken");
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // for register and login
+  const [staticModal, setStaticModal] = useState(false);
+  const toggleShow = () => setStaticModal(!staticModal);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.post(
+        `https://retrand4.onrender.com/previewad/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      setOwn(response.data.own);
+      setData(response.data.product);
+      setLoading(false); // Set loading state to false when data is fetched successfully
+    } catch (error) {
+      // console.error(error);
+      // when not loged in
+      // make changes for not loged in user as authToken is not updated so data is not recieved .
+      setOwn(false);
+      try{
+        const notlogedindata = await axios.post(`https://retrand4.onrender.com/previewad/notloggedin/${id}`);
+      setData(notlogedindata.data.product);
+      setLoading(false); // Set loading state to false when data is fetched successfully
+      }
+      catch(e){
+        setLoading(false);
+        setNotFound(true); 
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handlePromoteClick = () => {
+    onOpen();
+  };
+
+  const handlePromoteConfirm = async () => {
+    try {
+      // Create Razorpay order
+      const orderResponse = await axios.post(
+        "https://retrand4.onrender.com/create-promotion-order",
+        { productId: id },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      
+      const { orderId, amount, currency, keyId } = orderResponse.data;
+      
+      // Configure Razorpay options
+      const options = {
+        key: keyId,
+        amount: amount,
+        currency: currency,
+        name: "OLX Clone",
+        description: "Product Promotion Payment",
+        order_id: orderId,
+        handler: async function (response) {
+          try {
+            // Verify payment with server
+            const verifyResponse = await axios.post(
+              "https://retrand4.onrender.com/verify-promotion-payment",
+              {
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                productId: id,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${authToken}`,
+                },
+              }
+            );
+            
+            // Update local state
+            setData({
+              ...data,
+              isPromoted: true,
+              promotionStartDate: new Date(),
+              promotionEndDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+            });
+            
+            toast({
+              title: "Promotion Successful",
+              description: "Your product will be displayed at the top with a 'Best One' label for 30 days.",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+            });
+            
+            onClose();
+          } catch (error) {
+            console.error("Payment verification error:", error);
+            toast({
+              title: "Payment Verification Failed",
+              description: "There was an issue verifying your payment. Please contact support.",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            });
+          }
+        },
+        prefill: {
+          name: "User",
+          email: localStorage.getItem("userEmail") || "",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      
+      // Initialize Razorpay
+      const razorpayScript = document.createElement('script');
+      razorpayScript.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      document.body.appendChild(razorpayScript);
+      
+      razorpayScript.onload = () => {
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+      };
+      
+    } catch (error) {
+      console.error("Promotion error:", error);
+      toast({
+        title: "Promotion Failed",
+        description: "There was an issue creating the promotion order. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
+  if (NotFound) {
+      return <NotFoundComponent />;
+  }
+
+  const handleRemove = async () => {
+    try {
+      setIsRemoving(true);
+      await axios.delete(`https://retrand4.onrender.com/myads_delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      setIsRemoving(false);
+      toast({
+        title: "Ad Removed",
+        description: "The ad has been successfully removed.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/myads");
+    } catch (error) {
+      console.error(error);
+      setIsRemoving(false);
+      toast({
+        title: "Error",
+        description: "There was an error removing the ad.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleClick = async function(){
+    if(auth){
+     window.location.href = `/chat/${id}/${data.useremail}`
+    }
+    else{
+    toggleShow();
+    }
+  }
+  const address = data.address?.[0] || {};
+
+  const ProductPics = Object.keys(data)
+    .filter((key) => key.startsWith("productpic") && data[key])
+    .map((key) => data[key]);
+
+  const createdAt = new Date(data.createdAt);
+  const now = new Date();
+  // Calculate the time difference in milliseconds
+  const timeDiff = now.getTime() - createdAt.getTime();
+  // Convert milliseconds to days
+  const daysAgo = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+
+  return (
+    <div>
+      <Breadcrumb
+        spacing="8px"
+        separator={<ChevronRightIcon color="gray.500" />}
+        className="mt-3 ms-3"
+      >
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} to="/">
+            Home
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} to={`/catagory/${data.catagory}`}>
+            {data.catagory}
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink>{data.subcatagory}</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+
+      <MDBRow className="mt-3 mb-3">
+        <MDBCol md="8">
+          <Card>
+            <CardBody>
+              <Carousel>
+                {data.productpic1 && (
+                  <Carousel.Item>
+                    <MDBCardImage
+                      src={data.productpic1}
+                      alt="First slide"
+                      className="d-block w-100"
+                      style={{ maxHeight: "500px", objectFit: "contain" }}
+                    />
+                  </Carousel.Item>
+                )}
+                {/* ... other carousel items ... */}
+              </Carousel>
+            </CardBody>
+          </Card>
+          <Card className="mt-3">
+            <CardHeader>
+              <Heading size="md">Details</Heading>
+            </CardHeader>
+            <CardBody>
+              <Stack divider={<Divider />} spacing="4">
+                <Box>
+                  <Heading size="xs" textTransform="uppercase">
+                    Price
+                  </Heading>
+                  <Text pt="2" fontSize="sm">
+                    <CurrencyRupeeTwoToneIcon />
+                    {data.price}
+                    {data.isPromoted && (
+                      <Badge colorScheme="green" ml={2}>
+                        Best One
+                      </Badge>
+                    )}
+                  </Text>
+                </Box>
+                <Box>
+                  <Heading size="xs" textTransform="uppercase">
+                    Description
+                  </Heading>
+                  <Text pt="2" fontSize="sm">
+                    {data.description}
+                  </Text>
+                </Box>
+              </Stack>
+            </CardBody>
+          </Card>
+        </MDBCol>
+        <MDBCol md="4">
+          <Card>
+            <CardHeader>
+              <Heading size="md">Seller Information</Heading>
+            </CardHeader>
+            <CardBody>
+              <Flex>
+                <Image
+                  borderRadius="full"
+                  boxSize="50px"
+                  src={data.ownerpicture}
+                  alt={data.owner}
+                  mr="12px"
+                />
+                <Stack>
+                  <Heading size="sm">{data.owner}</Heading>
+                  <Text>Member since 2023</Text>
+                </Stack>
+              </Flex>
+            </CardBody>
+            <CardFooter>
+              {own ? (
+                <Flex width="100%" justifyContent="space-between">
+                  <Button
+                    colorScheme="red"
+                    onClick={handleRemove}
+                    isLoading={isRemoving}
+                  >
+                    Remove Ad
+                  </Button>
+                  {!data.isPromoted && (
+                    <Button
+                      colorScheme="green"
+                      onClick={handlePromoteClick}
+                    >
+                      Promote Ad
+                    </Button>
+                  )}
+                </Flex>
+              ) : (
+                <Button
+                  colorScheme="blue"
+                  width="100%"
+                  onClick={authToken ? handleClick : toggleShow}
+                >
+                  Chat with Seller
+                </Button>
+              )}
+            </CardFooter>
+          </Card>
+          <Card className="mt-3">
+            <CardHeader>
+              <Heading size="md">Posted in</Heading>
+            </CardHeader>
+            <CardBody>
+              <Text>
+                {data.address && data.address[0] && data.address[0].area},{" "}
+                {data.address && data.address[0] && data.address[0].city},{" "}
+                {data.address && data.address[0] && data.address[0].state},{" "}
+                {data.address && data.address[0] && data.address[0].postcode}
+              </Text>
+              <MapComponent />
+            </CardBody>
+          </Card>
+        </MDBCol>
+      </MDBRow>
+
+      {/* Promotion Modal */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Promote Your Product</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text mb={4}>
+              Promote your product for ₹30 to make it appear at the top of search results with a "Best One" label for 30 days.
+            </Text>
+            <Box p={4} borderWidth="1px" borderRadius="lg">
+              <Text fontWeight="bold">{data.title}</Text>
+              <Text>Price: ₹{data.price}</Text>
+            </Box>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handlePromoteConfirm}>
+              Pay ₹30
+            </Button>
+            <Button variant="ghost" onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {staticModal && <Modallogin toggleShow={toggleShow} />}
+    </div>
+  );
+};
+
+export default PreviewAd;

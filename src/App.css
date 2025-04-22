@@ -1,0 +1,498 @@
+.App {
+  text-align: center;
+}
+.logo{
+  mix-blend-mode: darken;
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  margin: 5px 0;
+}
+/* Default styles */
+.custom-file-input {
+  width: 50%;
+}
+
+/* Styles for screens smaller than 576px */
+@media (max-width: 575.98px) {
+  .custom-file-input {
+    width: 100%;
+  }
+}
+
+/* Styles for screens between 576px and 768px */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .custom-file-input {
+    width: 70%;
+  }
+}
+
+/* Styles for screens between 768px and 992px */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .custom-file-input {
+    width: 60%;
+  }
+}
+
+/* Styles for screens between 992px and 1200px */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .custom-file-input {
+    width: 50%;
+  }
+}
+
+/* Styles for screens larger than 1200px */
+@media (min-width: 1200px) {
+  .custom-file-input {
+    width: 40%;
+  }
+}
+.dropdown-toggle {
+  background-color: #f8f9fa;
+  border-color: #6c757d;
+  color: #343a40;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0.375rem 0.75rem;
+  text-align: left;
+}
+
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+	.row {
+	  display: flex; /* equal height of the children */
+	}
+	.col {
+	  flex: 1; /* additionally, equal width */
+	  margin: 2px;
+	}
+.lo-container{
+    width: 100%;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+.back {
+  background: url("https://img.freepik.com/premium-vector/e-commerce-online-shopping-flat-illustration-suitable-web-banners_210682-45.jpg?w=996");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.Navbar a:hover {
+  color: #17a2b8 !important;
+}
+
+/* Modern Navbar Styling */
+.mdb-navbar {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.navbar-brand {
+  font-family: 'Poppins', sans-serif;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: translateY(-2px);
+}
+
+.nav-link {
+  position: relative;
+  margin: 0 10px;
+  padding: 8px 0;
+  color: #ffffff !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #f0f0f0 !important;
+}
+
+.nav-link:hover:after {
+  width: 100%;
+}
+
+.nav-link:hover {
+  color: #17a2b8;
+}
+
+.navbar-toggler {
+  border: none;
+  background: transparent;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.avatar-container {
+  transition: transform 0.3s ease;
+}
+
+.avatar-container:hover {
+  transform: scale(1.05);
+}
+
+.search-container {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.search-container input {
+  border-radius: 20px;
+  padding-left: 15px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+  box-shadow: 0 0 0 2px rgba(23, 162, 184, 0.25);
+  border-color: #17a2b8;
+}
+
+.search-button {
+  border-radius: 0 20px 20px 0;
+  background-color: #17a2b8;
+  color: white;
+}
+
+/* Mobile Navbar Styling */
+@media (max-width: 768px) {
+  .mdb-navbar {
+    padding: 8px 0;
+  }
+  
+  .navbar-brand {
+    font-size: 1.2rem;
+    margin-left: 10px;
+  }
+  
+  .navbar-toggler {
+    margin-right: 10px;
+    padding: 4px;
+  }
+  
+  .search-container {
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .search-container input {
+    width: 100%;
+    font-size: 14px;
+    height: 40px;
+  }
+  
+  .search-button {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .nav-link {
+    padding: 12px 15px;
+    margin: 5px 0;
+    border-radius: 8px;
+    background-color: rgba(240, 240, 240, 0.5);
+    text-align: center;
+  }
+  
+  .nav-link:hover {
+    background-color: rgba(23, 162, 184, 0.1);
+  }
+  
+  .nav-link:after {
+    display: none;
+  }
+  
+  .navbar-collapse {
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Improve spacing between navbar items */
+  .navbar-nav {
+    gap: 8px;
+  }
+  
+  /* Make buttons more touch-friendly */
+  .mdb-btn, .chakra-button {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Improve avatar menu for touch */
+  .avatar-container {
+    margin: 5px auto;
+  }
+  
+  /* Center icons in mobile view */
+  .d-flex.align-items-center {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+/* Specific improvements for very small screens */
+@media (max-width: 480px) {
+  .navbar-brand span:nth-child(2) {
+    display: none; /* Hide the tagline on very small screens */
+  }
+  
+  .search-container {
+    margin: 8px 0;
+  }
+  
+  .search-container input {
+    height: 36px;
+    font-size: 13px;
+  }
+  
+  .search-button {
+    height: 36px;
+    width: 36px;
+  }
+}
+
+/* BEST ONE badge styling */
+
+
+/* Ensure the badge doesn't overflow its container */
+.category-link-container {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+/* Hide badges in category navigation with multiple selectors for robustness */
+.cat-nav-item .best-one-badge,
+.cat-nav-item .mobile-badge,
+.cat-nav-item .good-for-best-one-badge,
+.cat-nav-link .best-one-badge,
+.cat-nav-link .mobile-badge,
+.cat-nav-link .good-for-best-one-badge,
+.cat-button .best-one-badge,
+.cat-button .mobile-badge,
+.cat-button .good-for-best-one-badge,
+a[data-category-nav="true"] .best-one-badge,
+a[data-category-nav="true"] .mobile-badge,
+a[data-category-nav="true"] .good-for-best-one-badge,
+.cat-navbar .best-one-badge,
+.cat-navbar .mobile-badge,
+.cat-navbar .good-for-best-one-badge {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Fix for BEST ONE badge on mobile items (only in product cards) */
+.mobile-badge {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  margin-left: 10px;
+  z-index: 10000;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  background-color: #38A169;
+  color: white;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* Good for the best one badge */
+.good-for-best-one-badge {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  margin-left: 10px;
+  z-index: 10000;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  background-color: #3182CE;
+  color: white;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* Remove extra spacing for category nav links */
+.cat-nav-link[href*="Mobile"] span, 
+.cat-nav-link[href*="Bikes"] span,
+.cat-nav-link[href*="Furniture"] span {
+  margin-right: initial !important;
+}
+
+/* Keep spacing for product display links only */
+a:not([data-category-nav="true"]):not(.cat-nav-link)[href*="Mobile"] span, 
+a:not([data-category-nav="true"]):not(.cat-nav-link)[href*="Bikes"] span,
+a:not([data-category-nav="true"]):not(.cat-nav-link)[href*="Furniture"] span {
+  margin-right: 90px;
+}
+
+/* Add a specific override to prevent any badges in cat-navbar */
+.cat-navbar .best-one-badge,
+.cat-navbar .mobile-badge,
+.cat-navbar .good-for-best-one-badge,
+.cat-navbar span.badge,
+.cat-navbar [class*='badge'],
+.cat-navbar *[class*='BEST'],
+.cat-navbar *[class*='ONE'],
+.cat-navbar *[class*='GOOD'] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Force no margin-right adjustment for category items */
+.cat-navbar a[href*="Mobile"] span,
+.cat-navbar a[href*="Bikes"] span,
+.cat-navbar a[href*="Furniture"] span {
+  margin-right: initial !important;
+}
+
+/* Login/Register modal styling */
+.modal-dialog .modal-content {
+  color: #212529 !important;
+}
+
+.modal-dialog .modal-content .modal-title {
+  color: #212529 !important;
+  font-weight: 600;
+}
+
+.modal-dialog .form-label {
+  color: #212529 !important;
+}
+
+.modal-dialog .nav-tabs .nav-link {
+  color: #495057 !important;
+}
+
+.modal-dialog .nav-tabs .nav-link.active {
+  color: #0d6efd !important;
+  font-weight: 600;
+}
+
+.modal-dialog p, .modal-dialog a {
+  color: #212529 !important;
+}
+
+.modal-dialog a:hover {
+  color: #0d6efd !important;
+}
+
+/* Google Sign In button text */
+.modal-dialog button[aria-label="Sign in with Google"] {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+
+/* Input field styling */
+.modal-dialog input.form-control {
+  color: #212529 !important;
+}
+
+.modal-dialog input.form-control::placeholder {
+  color: #6c757d !important;
+  opacity: 0.8;
+}
+
+.modal-dialog .form-outline input.form-control:focus ~ .form-label,
+.modal-dialog .form-outline input.form-control.active ~ .form-label {
+  color: #0d6efd !important;
+}
+
+/* Location selection styling */
+.dropdown-toggle {
+  color: #212529 !important;
+  font-weight: 500 !important;
+}
+
+.dropdown-menu .dropdown-item {
+  color: #212529 !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #f8f9fa !important;
+  color: #16181b !important;
+}
+
+.nav-tabs .nav-link {
+  color: #495057 !important;
+}
+
+.nav-tabs .nav-link.active {
+  color: #0d6efd !important;
+  font-weight: 600;
+}
+
+.list-group-item small {
+  color: #212529 !important;
+}
+
+.list-group-item small.text-muted {
+  color: #6c757d !important;
+}
+
+.form-outline .form-control:focus ~ .form-label,
+.form-outline .form-control.active ~ .form-label {
+  color: #0d6efd !important;
+}
+
+.form-outline .form-control {
+  color: #212529 !important;
+}
+
+.form-outline .form-label {
+  color: #212529 !important;
+}
+
+/* SellForm headings */
+.list-group-item h5 b {
+  color: #212529 !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  display: block;
+  margin-bottom: 15px;
+}
