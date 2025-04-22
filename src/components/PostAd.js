@@ -34,7 +34,7 @@ const PostAd = () => {
 
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
-        "http://localhost:5000/api/postad",
+        "https://chages-new-olx.onrender.com/api/postad",
         postFormData,
         {
           headers: {
