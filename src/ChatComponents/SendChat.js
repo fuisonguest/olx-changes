@@ -16,7 +16,7 @@ export default function SendChat({ id, to }) {
     e.preventDefault();
     if (message) {
       const response = await axios.post(
-        "http://localhost:5000/sendMessage",
+        "https://chages-new-olx.onrender.com/sendMessage",
         { message, id, to },
         {
           headers: {
