@@ -367,7 +367,7 @@ export default function SellForm() {
       console.log("Job data included (processed):", processedJobData);
       
       const token = localStorage.getItem('authToken');
-      const response = await axios.post("http://localhost:5000/add_product", productData, {
+      const response = await axios.post("https://chages-new-olx.onrender.com/add_product", productData, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
