@@ -14,7 +14,7 @@ export default function Inbox() {
   useEffect(() => {
     const fetchNewChats = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/newchats", {
+        const response = await axios.get("https://chages-new-olx.onrender.com/api/newchats", {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
