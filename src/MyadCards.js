@@ -20,7 +20,7 @@ function MyadCards() {
     const fetchAds = async () => {
       setIsLoading(true);
       const token = localStorage.getItem("authToken");
-      const response = await axios.get("http://localhost:5000/myads_view", {
+      const response = await axios.get("https://chages-new-olx.onrender.com/myads_view", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
