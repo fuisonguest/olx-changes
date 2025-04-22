@@ -81,7 +81,7 @@ export default function Navbar({ auth, setAuth }) {
       
       try {
         const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:5000/wishlist", {
+        const response = await axios.get("https://chages-new-olx.onrender.com/wishlist", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -226,7 +226,7 @@ export default function Navbar({ auth, setAuth }) {
       const savedLocation = localStorage.getItem('userLocation');
       const locationData = savedLocation ? JSON.parse(savedLocation) : null;
       
-      const response = await axios.get("http://localhost:5000/getProducts", {
+      const response = await axios.get("https://chages-new-olx.onrender.com/getProducts", {
         params: {
           location: locationData?.name || 'India'
         }
