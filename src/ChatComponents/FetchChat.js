@@ -34,7 +34,7 @@ export default function FetchChat({ id, toData, to }) {
       const fetchNewMessages = async () => {
         const currentMessageLength = newMessages.length;
         try {
-          const response = await axios.get("http://localhost:5000/api/new-messages", {
+          const response = await axios.get("https://chages-new-olx.onrender.com/api/new-messages", {
             params: { id, to }, // Pass data as query parameters
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -51,7 +51,7 @@ export default function FetchChat({ id, toData, to }) {
             );
             
             if (unreadMessages.length > 0) {
-              await axios.post("http://localhost:5000/mark-messages-read", 
+              await axios.post("https://chages-new-olx.onrender.com/mark-messages-read", 
                 { messageIds: unreadMessages.map(msg => msg._id) },
                 {
                   headers: {
