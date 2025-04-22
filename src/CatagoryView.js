@@ -29,7 +29,7 @@ export default function CatagoryView() {
 
     const getProductsbyCategory = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getProductsbyCategory/${category}`);
+        const response = await axios.get(`https://chages-new-olx.onrender.com/getProductsbyCategory/${category}`);
         
         // Sort products to prioritize promoted products
         const sortedProducts = [...response.data].sort((a, b) => {
