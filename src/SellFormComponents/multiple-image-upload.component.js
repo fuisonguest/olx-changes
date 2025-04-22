@@ -45,7 +45,7 @@ export default function MultipleImageUploadComponent({ onFileSelect }) {
       console.log("Sending image for moderation...");
       
       try {
-        const response = await axios.post('http://localhost:5000/moderate-image', {
+        const response = await axios.post('https://chages-new-olx.onrender.com/moderate-image', {
           image: pureBase64
         }, {
           timeout: 60000 // Increased timeout to 60 seconds as Vision API may take longer
