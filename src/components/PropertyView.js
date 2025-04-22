@@ -30,8 +30,8 @@ const PropertyView = ({ productId }) => {
         
         // Try authenticated request first
         const endpoint = authToken 
-          ? `http://localhost:5000/previewad/${productId}`
-          : `http://localhost:5000/previewad/notloggedin/${productId}`;
+          ? `https://chages-new-olx.onrender.com/previewad/${productId}`
+          : `https://chages-new-olx.onrender.com/previewad/notloggedin/${productId}`;
         
         const headers = authToken 
           ? { Authorization: `Bearer ${authToken}` }
