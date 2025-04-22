@@ -38,7 +38,7 @@ const FixJobData = ({ productId }) => {
 
       // First, fetch the current product data
       const response = await axios.post(
-        `http://localhost:5000/previewad/${productId}`,
+        `https://chages-new-olx.onrender.com/previewad/${productId}`,
         {},
         {
           headers: {
@@ -70,7 +70,7 @@ const FixJobData = ({ productId }) => {
 
       // Directly update the product with the job data using the existing endpoint
       const updateResponse = await axios.post(
-        `http://localhost:5000/updateproduct/${productId}`,
+        `https://chages-new-olx.onrender.com/updateproduct/${productId}`,
         {
           jobData: jobData
         },
