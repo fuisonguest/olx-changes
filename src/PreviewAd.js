@@ -76,7 +76,7 @@ const PreviewAd = ({auth}) => {
   const fetchData = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/previewad/${id}`,
+        `https://chages-new-olx.onrender.com/previewad/${id}`,
         {},
         {
           headers: {
@@ -93,7 +93,7 @@ const PreviewAd = ({auth}) => {
       // make changes for not loged in user as authToken is not updated so data is not recieved .
       setOwn(false);
       try{
-        const notlogedindata = await axios.post(`http://localhost:5000/previewad/notloggedin/${id}`);
+        const notlogedindata = await axios.post(`https://chages-new-olx.onrender.com/previewad/notloggedin/${id}`);
       setData(notlogedindata.data.product);
       setLoading(false); // Set loading state to false when data is fetched successfully
       }
@@ -181,7 +181,7 @@ const PreviewAd = ({auth}) => {
       if (!authToken || !id) return;
       
       try {
-        const response = await axios.get(`http://localhost:5000/wishlist/check/${id}`, {
+        const response = await axios.get(`https://chages-new-olx.onrender.com/wishlist/check/${id}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -220,7 +220,7 @@ const PreviewAd = ({auth}) => {
             try {
               // Update promotion status in the database
               const updateResponse = await axios.post(
-                "http://localhost:5000/update-promotion-status",
+                "https://chages-new-olx.onrender.com/update-promotion-status",
                 { productId: id },
                 {
                   headers: {
@@ -319,7 +319,7 @@ const PreviewAd = ({auth}) => {
       // Server-side integration (requires both key ID and secret)
       // Create Razorpay order
       const orderResponse = await axios.post(
-        "http://localhost:5000/create-promotion-order",
+        "https://chages-new-olx.onrender.com/create-promotion-order",
         { productId: id },
         {
           headers: {
@@ -346,7 +346,7 @@ const PreviewAd = ({auth}) => {
             
             // Verify payment with server
             const verifyResponse = await axios.post(
-              "http://localhost:5000/verify-promotion-payment",
+              "https://chages-new-olx.onrender.com/verify-promotion-payment",
               {
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_order_id: response.razorpay_order_id,
@@ -464,7 +464,7 @@ const PreviewAd = ({auth}) => {
   const fetchDebugData = async () => {
     try {
       setDebugLoading(true);
-      const response = await axios.get(`http://localhost:5000/debug/product/${id}`);
+      const response = await axios.get(`https://chages-new-olx.onrender.com/debug/product/${id}`);
       console.log("Debug data:", response.data);
       setDebugData(response.data);
       setDebugError(null);
@@ -510,7 +510,7 @@ const PreviewAd = ({auth}) => {
   const handleRemove = async () => {
     try {
       setIsRemoving(true);
-      await axios.delete(`http://localhost:5000/myads_delete/${id}`, {
+      await axios.delete(`https://chages-new-olx.onrender.com/myads_delete/${id}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -569,7 +569,7 @@ const PreviewAd = ({auth}) => {
       
       if (isInWishlist) {
         // Remove from wishlist
-        await axios.delete(`http://localhost:5000/wishlist/remove/${id}`, {
+        await axios.delete(`https://chages-new-olx.onrender.com/wishlist/remove/${id}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -584,7 +584,7 @@ const PreviewAd = ({auth}) => {
       } else {
         // Add to wishlist
         await axios.post(
-          "http://localhost:5000/wishlist/add",
+          "https://chages-new-olx.onrender.com/wishlist/add",
           { productId: id },
           {
             headers: {
@@ -647,7 +647,7 @@ const PreviewAd = ({auth}) => {
 
       // Update the product with the job data using the existing endpoint
       const updateResponse = await axios.post(
-        `http://localhost:5000/updateproduct/${id}`,
+        `https://chages-new-olx.onrender.com/updateproduct/${id}`,
         {
           jobData: jobData // Send the object directly
         },
