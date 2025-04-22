@@ -35,7 +35,7 @@ export default function Wishlist() {
           return;
         }
 
-        const response = await axios.get("http://localhost:5000/wishlist", {
+        const response = await axios.get("https://chages-new-olx.onrender.com/wishlist", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
