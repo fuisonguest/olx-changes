@@ -78,7 +78,7 @@ function Login() {
       var name = document.getElementById("name").value;
       if (password === rpassword){
       axios
-      .post("http://localhost:5000/register", {
+      .post("https://chages-new-olx.onrender.com/register", {
           email,password,name,
       })
       .then((response) => {
@@ -109,7 +109,7 @@ function Login() {
       var email = document.getElementById("email").value;
       var password = document.getElementById("password").value;
       axios
-      .post("http://localhost:5000/login", {
+      .post("https://chages-new-olx.onrender.com/login", {
           email,password,
       })
       .then((response) => {
@@ -268,7 +268,7 @@ function Login() {
       const idToken = await user.getIdToken();
       
       // Send token to backend
-      const response = await axios.post('http://localhost:5000/phone-auth', {
+      const response = await axios.post('https://chages-new-olx.onrender.com/phone-auth', {
         credential: idToken,
         phoneNumber: user.phoneNumber
       });
